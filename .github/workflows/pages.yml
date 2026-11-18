@@ -1,4 +1,4 @@
-# Publica la web en GitHub Pages (https://cuellar-dev.github.io/citaly/)
+# Publica la web en GitHub Pages con dominio propio (https://citaly.me)
 # cada vez que se sube algo a main. También se puede lanzar a mano desde
 # la pestaña Actions.
 name: Publicar en GitHub Pages
@@ -29,18 +29,15 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          BASE_PATH: /citaly/
+          BASE_PATH: /
       # Pages no sabe de rutas de React: cualquier dirección que no exista
-      # (p. ej. /citaly/local/energym al recargar) sirve 404.html, que es la app.
+      # (p. ej. /local/energym al recargar) sirve 404.html, que es la app.
       - run: cp dist/index.html dist/404.html
-      # El 404.html arregla la navegación, pero responde con estado 404: el
-      # navegador lo pinta igual, pero Lighthouse/Google lo ven como página
-      # que no existe. Para las rutas FIJAS se escribe dist/<ruta>.html (Pages
-      # lo sirve en /citaly/<ruta> con 200) con los archivos de esa página ya
-      # precargados. Detalles y lista de rutas en el propio script.
+      # Para las rutas FIJAS se escribe dist/<ruta>.html con los archivos de
+      # esa página ya precargados, para que respondan con 200 y no con 404.
       - run: node scripts/rutas-estaticas.mjs
         env:
-          BASE_PATH: /citaly/
+          BASE_PATH: /
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
