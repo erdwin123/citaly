@@ -1,0 +1,196 @@
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
+import { Link } from 'react-router-dom'
+import { Pencil, QrCode, Star } from 'lucide-react'
+import { franjaTurno } from '../../utils/fichaLocal.js'
+import Foto from '../Foto/Foto.jsx'
+import TimelineTurno from './TimelineTurno.jsx'
+import { NubeBorde } from '../DetalleLocal/Tinta.jsx'
+import './cabeceraNegocio.css'
+
+/* Bloque de arriba: el local y el timeline del turno de hoy. */
+function CabeceraNegocio({
+  nombre,
+  url,
+  categoria,
+  nota,
+  opiniones,
+  fotos = [],
+  abreHoy = true,
+  recibiendo = false,
+  pausada = false,
+  apertura,
+  cierre,
+  ahora = new Date(),
+  onGaleria,
+  onEditar,
+  animacionPausada = false,
+}) {
+  const turno = calcularTurno({ apertura, cierre, ahora, abreHoy })
+  const tono = turno.enCurso ? 'abierto' : 'cerrado'
+
+  return (
+    <header className="cabecera-negocio">
+      <div className="cabecera-negocio-identidad tema-oscuro-fijo">
+        {/* Foto de portada como <img> (antes background CSS): es lo más grande
+            de la pantalla y así el navegador la pide antes y sin cookies de
+            terceros. Va detrás del degradado (::before). */}
+        <Foto
+          src={url}
+          className="cabecera-negocio-fondo"
+          anchos={[480, 720]}
+          calidad={70}
+          sizes="(max-width: 480px) 100vw, 480px"
+          prioridad
+        />
+        <div className="cabecera-negocio-barra">
+          {fotos.length > 0 && (
+            <button
+              type="button"
+              className="cabecera-negocio-boton cabecera-negocio-galeria"
+              onClick={onGaleria}
+              aria-label={`Ver la galería, ${fotos.length} fotos`}
+            >
+              <span className="cabecera-negocio-miniaturas" aria-hidden="true">
+                {fotos.slice(0, 3).map((foto) => (
+                  <Foto key={foto} src={foto} ancho={96} proporcion={1} carga="eager" />
+                ))}
+              </span>
+              {fotos.length} fotos
+            </button>
+          )}
+          {/* Compartir y Editar van juntos a la derecha. Agrupados a
+              propósito: sueltos, el space-between de la barra los separaría a
+              los dos extremos cuando el local no tiene galería. */}
+          <div className="cabecera-negocio-acciones">
+            {/* Navegación de verdad, no un botón con onClick: así se puede
+                abrir en otra pestaña y la URL es compartible. */}
+            <Link
+              to="/negocio/compartir"
+              className="cabecera-negocio-boton cabecera-negocio-compartir"
+              aria-label="Compartir el local con un código QR"
+            >
+              <QrCode size={15} strokeWidth={2.25} aria-hidden="true" />
+              <span>Compartir</span>
+            </Link>
+            <button type="button" className="cabecera-negocio-boton cabecera-negocio-editar" onClick={onEditar}>
+              <Pencil size={15} strokeWidth={2.25} aria-hidden="true" />
+              Editar
+            </button>
+          </div>
+        </div>
+
+        <div className="cabecera-negocio-textos">
+          <h2 className="cabecera-negocio-nombre">{nombre}</h2>
+          {/* Sin opiniones la nota es 0: con `&&` se pintaría un «0» suelto. */}
+          {(categoria || nota > 0) && (
+            <p className="cabecera-negocio-meta">
+              {categoria}
+              {categoria && nota > 0 && <span aria-hidden="true">·</span>}
+              {nota > 0 && (
+                <span className="cabecera-negocio-nota">
+                  <Star size={12} strokeWidth={2} fill="currentColor" aria-hidden="true" />
+                  {nota}
+                  {opiniones != null && <small>({opiniones})</small>}
+                </span>
+              )}
+            </p>
+          )}
+          <p className={`cabecera-negocio-estado cabecera-negocio-estado--${tono}`}>
+            <span className="cabecera-negocio-pulso" aria-hidden="true" />
+            {turno.estado}
+          </p>
+        </div>
+        {pausada && (
+          <p className="cabecera-negocio-recibiendo cabecera-negocio-recibiendo--pausa">
+            <span className="cabecera-negocio-recibiendo-luz" aria-hidden="true" />
+            Agenda en pausa
+          </p>
+        )}
+        {!pausada && recibiendo && turno.enCurso && (
+          <p className="cabecera-negocio-recibiendo">
+            <span className="cabecera-negocio-recibiendo-luz" aria-hidden="true" />
+            Recibiendo reservas
+          </p>
+        )}
+        <NubeBorde />
+      </div>
+
+      <div className="cabecera-negocio-turno">
+        <div className="cabecera-negocio-reloj">
+          <p className="cabecera-negocio-dia">
+            {turno.dia}
+            <span>{turno.hora}</span>
+          </p>
+          <p className={`cabecera-negocio-tag cabecera-negocio-tag--${tono}`}>{turno.restante}</p>
+        </div>
+        <TimelineTurno
+          porcentaje={turno.porcentaje}
+          inicioMin={turno.inicioMin}
+          finMin={turno.finMin}
+          enCurso={turno.enCurso}
+          horaTexto={turno.hora}
+          aperturaTexto={turno.aperturaTexto}
+          cierreTexto={turno.cierreTexto}
+          mitadTexto={turno.mitadTexto}
+          pausado={animacionPausada}
+        />
+      </div>
+    </header>
+  )
+}
+
+function etiquetaHora(minutos) {
+  const normalizado = ((minutos % (24 * 60)) + 24 * 60) % (24 * 60)
+  const h24 = Math.floor(normalizado / 60)
+  const m = normalizado % 60
+  const sufijo = h24 >= 12 ? 'PM' : 'AM'
+  const h12 = h24 % 12 || 12
+  return `${h12}:${String(m).padStart(2, '0')} ${sufijo}`
+}
+
+function textoRestante(minutos) {
+  const horas = Math.floor(minutos / 60)
+  const resto = minutos % 60
+  if (horas <= 0) return `${resto} min restantes`
+  if (resto === 0) return `${horas}h restantes`
+  return `${horas}h ${resto}min restantes`
+}
+
+function calcularTurno({ apertura, cierre, ahora, abreHoy }) {
+  const franja = franjaTurno(apertura, cierre, ahora)
+  const { ini, fin, ahoraMin, cursor, total } = franja
+  const enCurso = abreHoy && franja.enCurso
+  const antes = cursor < ini
+  const porcentaje = abreHoy && total ? (Math.min(Math.max(cursor - ini, 0), total) / total) * 100 : 0
+  const dia = format(ahora, 'EEEE d', { locale: es })
+
+  let estado = 'ABIERTO'
+  let restante = textoRestante(fin - cursor)
+  if (!abreHoy) {
+    estado = 'Hoy no abre'
+    restante = 'Día libre'
+  } else if (antes) {
+    estado = 'CERRADO'
+    restante = `Abre a las ${etiquetaHora(ini)}`
+  } else if (!enCurso) {
+    estado = 'Turno cerrado'
+    restante = 'Ya cerró'
+  }
+
+  return {
+    dia: dia.charAt(0).toUpperCase() + dia.slice(1),
+    hora: etiquetaHora(ahoraMin),
+    aperturaTexto: etiquetaHora(ini),
+    cierreTexto: etiquetaHora(fin),
+    mitadTexto: etiquetaHora(ini + Math.round(total / 2)),
+    inicioMin: ini,
+    finMin: fin,
+    porcentaje,
+    estado,
+    restante,
+    enCurso,
+  }
+}
+
+export default CabeceraNegocio

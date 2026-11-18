@@ -1,0 +1,184 @@
+.taly-pixel {
+  display: block;
+  width: 72px;
+  height: auto;
+  overflow: visible;
+}
+
+/* El cambio de cara: cada píxel cambia de color con un retraso según su
+   fila, así el cambio baja como una cortina de arriba abajo. */
+.taly-pixel-px {
+  transition: fill 0.16s steps(2, end);
+  transition-delay: calc(var(--f, 0) * 22ms);
+}
+
+/* El saltito del cambio de cara lo lanza el componente; aquí solo su eje:
+   los pies, para que se agache contra el suelo. */
+.taly-pixel-cuerpo {
+  transform-box: view-box;
+  transform-origin: 8px 15px;
+}
+
+/* ---------- Gestos en reposo, uno por cara ---------- */
+
+/* Sugerencia: la bombilla titila, como una idea que se está encendiendo. */
+.taly-pixel--sugerencia .taly-pixel-px--W {
+  animation: taly-pixel-luz 1.8s steps(1, end) infinite;
+}
+
+@keyframes taly-pixel-luz {
+  0%,
+  62%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0.35;
+  }
+}
+
+/* Bien: da saltitos de contento. Va en el svg y no en el grupo para no
+   pelearse con el salto del cambio de cara. */
+.taly-pixel--bien {
+  animation: taly-pixel-brinco 1.1s steps(4, end) 0.5s infinite;
+}
+
+@keyframes taly-pixel-brinco {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Queja: tiembla de rabia y el vapor sube y se apaga. */
+.taly-pixel--queja {
+  animation: taly-pixel-rabia 2.2s steps(1, end) 0.5s infinite;
+}
+
+@keyframes taly-pixel-rabia {
+  0%,
+  40%,
+  100% {
+    transform: translateX(0);
+  }
+  44% {
+    transform: translateX(-2px);
+  }
+  48% {
+    transform: translateX(2px);
+  }
+  52% {
+    transform: translateX(-2px);
+  }
+  56% {
+    transform: translateX(1px);
+  }
+  60% {
+    transform: translateX(0);
+  }
+}
+
+.taly-pixel--queja .taly-pixel-px--G {
+  animation: taly-pixel-vapor 1.2s steps(3, end) infinite;
+  animation-delay: calc(var(--f, 0) * -0.3s);
+}
+
+@keyframes taly-pixel-vapor {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Pregunta: el interrogante sube y baja a saltos, como quien le da vueltas. */
+.taly-pixel--pregunta .taly-pixel-px--Q {
+  animation: taly-pixel-duda 1.6s steps(1, end) infinite;
+}
+
+@keyframes taly-pixel-duda {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+/* ---------- Las del alta de locales ---------- */
+
+/* Apunte: el lápiz da golpecitos al aire, como quien señala la pizarra. */
+.taly-pixel--apunte :is(.taly-pixel-px--Y, .taly-pixel-px--T, .taly-pixel-px--N, .taly-pixel-px--E) {
+  animation: taly-pixel-golpecito 1.4s steps(1, end) infinite;
+}
+
+@keyframes taly-pixel-golpecito {
+  0%,
+  50%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  60%,
+  80% {
+    transform: translateY(1px);
+  }
+}
+
+/* Tarjeta: la agita en alto, dos sacudidas y pausa, como un árbitro. */
+.taly-pixel--tarjeta .taly-pixel-px--C {
+  animation: taly-pixel-tarjeta 1.5s steps(1, end) 0.4s infinite;
+}
+
+@keyframes taly-pixel-tarjeta {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
+  }
+  10%,
+  30% {
+    transform: translateY(-1px);
+  }
+}
+
+/* Llave: tintinea de lado a lado, orgulloso de su local. */
+.taly-pixel--llave .taly-pixel-px--A {
+  animation: taly-pixel-llave 1.8s steps(1, end) 0.5s infinite;
+}
+
+@keyframes taly-pixel-llave {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0);
+  }
+  60%,
+  80% {
+    transform: translateX(-1px);
+  }
+  70%,
+  90% {
+    transform: translateX(1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .taly-pixel,
+  .taly-pixel-cuerpo,
+  .taly-pixel-px {
+    animation: none !important;
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+}

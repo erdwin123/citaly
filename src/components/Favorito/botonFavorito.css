@@ -1,0 +1,53 @@
+.boton-favorito {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fonts-color-primary, #f0f0f0);
+  cursor: pointer;
+}
+
+.boton-favorito--on {
+  color: #ff6b6b;
+}
+
+.boton-favorito:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+.boton-favorito--hero {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.boton-favorito--hero.boton-favorito--on {
+  color: #ff6b6b;
+}
+
+.boton-favorito--tarjeta {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+}
+
+/* Estas variantes flotan sobre una foto: van en cristal oscuro y en blanco
+   en los dos temas, así que recuperan los tokens de noche. */
+.boton-favorito--hero,
+.boton-favorito--tarjeta,
+.boton-favorito--polaroid {
+  --fonts-color-primary: #f0f0f0;
+  --tinte: 240 240 240;
+  --tinte-fuerza: 1;
+}

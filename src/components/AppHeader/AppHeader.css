@@ -1,0 +1,178 @@
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  padding: max(12px, env(safe-area-inset-top)) 20px 14px;
+  /* Degradado en vez de un bloque plano con línea: arranca más oscuro que
+     antes y muere exactamente en el fondo de la app, así el header deja de
+     tener un corte y se funde con la página. Por eso ya no hay border-bottom:
+     el degradado hace ese trabajo sin dibujar una raya. */
+  background: linear-gradient(180deg, var(--superficie-honda) 0%, var(--superficie-honda) 58%, var(--background-color) 100%);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 3px var(--background-color);
+}
+
+.app-header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  max-width: 720px;
+  margin: 0;
+}
+
+.app-header-brand {
+  width: auto;
+  height: 26px;
+  margin: -3px 0 -1px -2px;
+}
+
+.app-header-title {
+  margin: 0;
+  font-family: var(--font-familyPrincipal);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--fonts-color-primary);
+  line-height: 1.25;
+}
+
+.app-header-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: end;
+  color: var(--fonts-color-primary-alternative);
+}
+
+.app-header-icon {
+  cursor: pointer;
+}
+
+/* Los tres puntos eran un <span> sin semántica. Ahora es el botón que abre el
+   cartel, así que necesita ser un botón de verdad. */
+.app-header-boton {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.18s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .app-header-boton:hover {
+    background: rgb(var(--tinte) / calc(0.08 * var(--tinte-fuerza)));
+  }
+}
+
+.app-header-boton:active {
+  transform: scale(0.92);
+}
+
+.app-header-boton[aria-expanded='true'] {
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 18%, transparent);
+  color: var(--primary-texto, #00c2ad);
+}
+
+.app-header-boton:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header-boton {
+    transition-duration: 0.01ms;
+  }
+
+  .app-header-boton:active {
+    transform: none;
+  }
+}
+
+/* ---------- Campana ---------- */
+
+.app-header-campana {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Mostaza, el color del copete de Taly: lo único cálido del header, así se
+   ve sin tener que ser rojo de alarma. */
+.app-header-contador {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px var(--superficie-honda);
+  background: var(--yellow-color, #ffd166);
+  color: var(--fonts-color-secondary, #121413);
+  font-family: var(--font-familyPrincipal);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ---------- Campana ---------- */
+
+.app-header-campana {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Mostaza, el color del copete de Taly: lo único cálido del header, así se
+   ve sin tener que ser rojo de alarma. */
+.app-header-contador {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px var(--superficie-honda);
+  background: var(--yellow-color, #ffd166);
+  color: var(--fonts-color-secondary, #121413);
+  font-family: var(--font-familyPrincipal);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* Mientras el cartel está desplegado (MenuTablas pone la clase), el header
+   sube por encima de la barra de abajo: así el velo que crece desde los tres
+   puntos tapa la pantalla entera, barra incluida. */
+.app-header--menu {
+  z-index: 100001;
+}
+
+/* Los tres puntos quedan por encima del velo: el círculo nace de ellos. */
+.app-header-boton--menu {
+  position: relative;
+  z-index: 125;
+}

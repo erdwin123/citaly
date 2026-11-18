@@ -1,0 +1,90 @@
+/* Rejilla de horas. Se enseña el turno entero: las que no se pueden coger
+   quedan apagadas, no desaparecen. */
+
+.selector-horario-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+}
+
+.selector-horario-item {
+  min-height: 42px;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid rgb(var(--tinte) / calc(0.09 * var(--tinte-fuerza)));
+  border-radius: 12px;
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.selector-horario-item:active {
+  transform: scale(0.95);
+}
+
+.selector-horario-item:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+/* Solo con ratón: en el móvil el hover se queda pegado tras el toque y
+   tapaba el verde de la hora elegida hasta tocar otra cosa. */
+@media (hover: hover) and (pointer: fine) {
+  .selector-horario-item--libre:not(.selector-horario-item--activo):hover {
+    border-color: color-mix(in srgb, var(--primary-color, #00c2ad) 40%, transparent);
+    background: color-mix(in srgb, var(--primary-color, #00c2ad) 8%, var(--background-color, #121413));
+  }
+}
+
+.selector-horario-item--activo {
+  border-color: transparent;
+  background: var(--primary-color, #00c2ad);
+  color: var(--fonts-color-secondary, #121413);
+  box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--primary-color, #00c2ad) 90%, transparent);
+}
+
+/* Ya dieron: apagada del todo. */
+.selector-horario-item--pasada {
+  opacity: 0.26;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* Ya la tienes cogida en este local: se distingue de la que simplemente pasó. */
+.selector-horario-item--ocupada {
+  border-color: color-mix(in srgb, var(--yellow-color, #ffd166) 32%, transparent);
+  background: color-mix(in srgb, var(--yellow-color, #ffd166) 8%, transparent);
+  color: color-mix(in srgb, var(--yellow-texto, #ffd166) 75%, transparent);
+  cursor: not-allowed;
+}
+
+.selector-horario-item--pasada:active,
+.selector-horario-item--ocupada:active {
+  transform: none;
+}
+
+@media (max-width: 360px) {
+  .selector-horario-container {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 7px;
+  }
+
+  .selector-horario-item {
+    min-height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selector-horario-item {
+    transition: none;
+  }
+
+  .selector-horario-item:active {
+    transform: none;
+  }
+}

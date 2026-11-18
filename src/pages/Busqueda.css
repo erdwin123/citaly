@@ -1,0 +1,575 @@
+/* Buscar lugares. Mismo idioma que Mi Negocio, Mis Citas y Reservar:
+   fondo #121413, superficies #1E2221, radio 18, acento teal, títulos en drink
+   y píldoras de 999px. Ya no depende de Descubre.css. */
+
+.busqueda {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(100dvh - 150px);
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  padding-bottom: 28px;
+}
+
+.busqueda-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--primary-texto, #00c2ad);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- Cabecera ---------- */
+
+.busqueda-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 14px 18px 12px;
+}
+
+.busqueda-volver {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgb(var(--tinte) / calc(0.09 * var(--tinte-fuerza)));
+  border-radius: 50%;
+  background: var(--background-color-secondary, #1e2221);
+  color: var(--fonts-color-primary, #f0f0f0);
+  cursor: pointer;
+}
+
+.busqueda-volver:focus-visible,
+.busqueda-limpiar:focus-visible,
+.busqueda-filtros:focus-visible,
+.busqueda-chip:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+.busqueda-header-textos h1 {
+  margin: 4px 0 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+/* ---------- Barra de búsqueda ---------- */
+
+.busqueda-barra-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 6px 18px 12px;
+  background: linear-gradient(to bottom,
+      var(--background-color, #121413) 72%,
+      transparent 100%);
+}
+
+.busqueda-barra {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 50px;
+  padding: 0 8px 0 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  border-radius: 16px;
+  background: var(--background-color-secondary, #1e2221);
+  box-shadow: 0 10px 26px -16px rgb(var(--sombra) / calc(0.9 * var(--sombra-alfa)));
+}
+
+.busqueda-barra:focus-within {
+  border-color: color-mix(in srgb, var(--primary-color, #00c2ad) 45%, transparent);
+}
+
+.busqueda-barra-lupa {
+  flex-shrink: 0;
+  color: var(--primary-texto, #00c2ad);
+}
+
+.busqueda-barra input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--fonts-color-primary, #f0f0f0);
+  font: 600 14.5px var(--font-familyPrincipal, 'Quicksand', sans-serif);
+}
+
+.busqueda-barra input::placeholder {
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  opacity: 0.75;
+}
+
+.busqueda-limpiar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(var(--tinte) / calc(0.08 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  cursor: pointer;
+}
+
+.busqueda-filtros {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  border-radius: 12px;
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+  cursor: pointer;
+}
+
+.busqueda-filtros--activos {
+  border-color: transparent;
+  background: var(--primary-color, #00c2ad);
+  color: var(--fonts-color-secondary, #121413);
+}
+
+.busqueda-filtros-punto {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--yellow-color, #ffd166);
+  box-shadow: 0 0 0 2px var(--background-color-secondary, #1e2221);
+}
+
+/* ---------- Filtros puestos, visibles y quitables ---------- */
+
+.busqueda-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.busqueda-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 29px;
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--primary-color, #00c2ad) 32%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 11%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.busqueda-chip--limpiar {
+  border-style: dashed;
+  border-color: rgb(var(--tinte) / calc(0.16 * var(--tinte-fuerza)));
+  background: transparent;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+/* ---------- Cuerpo ---------- */
+
+.busqueda-cuerpo {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 4px 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.busqueda-seccion-cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
+  padding: 0 2px;
+}
+
+.busqueda-seccion-cabecera h2 {
+  margin: 5px 0 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.busqueda-cuenta {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 13%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.busqueda-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.busqueda-estado {
+  padding: 18px 6px 10px;
+}
+
+.busqueda-estado .taly-momento {
+  width: 100%;
+  min-height: 0;
+}
+
+/* ---------- Carrusel de sugeridos ---------- */
+
+.carrusel-locales {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carrusel-locales-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 2px;
+}
+
+.carrusel-locales-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.carrusel-locales-hint svg {
+  color: var(--primary-texto, #00c2ad);
+}
+
+.carrusel-locales-navigation {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.carrusel-locales-count {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 12px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  font-variant-numeric: tabular-nums;
+}
+
+.carrusel-locales-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.carrusel-locales-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(var(--tinte) / calc(0.18 * var(--tinte-fuerza)));
+  transition: background-color 0.25s ease, width 0.25s ease;
+}
+
+.carrusel-locales-dots span.is-active {
+  width: 14px;
+  border-radius: 999px;
+  background: var(--primary-color, #00c2ad);
+}
+
+.carrusel-locales-rail-wrap {
+  position: relative;
+}
+
+.similares-scroll {
+  display: flex;
+  gap: 10px;
+
+  padding: 2px 18px 4px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.similares-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.similares-scroll:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+  border-radius: 14px;
+}
+
+.carrusel-locales-fade {
+  position: absolute;
+  top: 0;
+  right: -18px;
+  bottom: 0;
+  width: 34px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--background-color, #121413));
+}
+
+/* ---------- Fila de lugar dentro del carrusel ---------- */
+
+.local-horizontal {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 268px;
+  padding: 9px 11px 9px 9px;
+  border: 1px solid rgb(var(--tinte) / calc(0.08 * var(--tinte-fuerza)));
+  border-radius: 16px;
+  background: var(--background-color-secondary, #1e2221);
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.local-horizontal:hover {
+  border-color: color-mix(in srgb, var(--primary-color, #00c2ad) 30%, transparent);
+}
+
+.local-horizontal:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+.local-horizontal-foto {
+  position: relative;
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.local-horizontal-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.local-horizontal-abierto {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-color, #00c2ad);
+  box-shadow: 0 0 0 2px rgb(var(--sombra) / calc(0.8 * var(--sombra-alfa)));
+}
+
+.local-horizontal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.local-horizontal-info strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.local-horizontal-info small {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.local-horizontal-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.local-horizontal-nota {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--yellow-texto, #ffd166);
+  font-weight: 700;
+}
+
+.local-horizontal-nota svg {
+  fill: currentColor;
+}
+
+.local-horizontal-punto {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.local-horizontal>svg {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 70%, transparent);
+}
+
+/* ---------- Móvil estrecho ---------- */
+
+@media (max-width: 360px) {
+
+  .busqueda-header,
+  .busqueda-barra-wrap,
+  .busqueda-cuerpo {
+    padding-inline: 12px;
+  }
+
+  .similares-scroll,
+  .carrusel-locales-fade {
+    margin-inline: -12px;
+  }
+
+  .similares-scroll {
+    padding-inline: 12px;
+  }
+
+  .local-horizontal {
+    width: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .local-horizontal,
+  .carrusel-locales-dots span {
+    transition: none;
+  }
+}
+
+/* El contador de las filas de abajo pesa menos que el de los resultados:
+   ahí es un dato de apoyo, no la respuesta a lo que buscaste. */
+.busqueda-cuenta--suave {
+  background: rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+/* La ilustración de Taly en los estados de carga y vacío. */
+.busqueda-estado .taly-momento-figura--ilustracion {
+  width: min(180px, 46vw);
+  opacity: 1;
+}
+/* ---------- Arranque: sin texto ni filtros ---------- */
+
+.busqueda-inicio-texto {
+  margin: 4px 0 14px;
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  text-align: left;
+}
+
+.busqueda-inicio-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.busqueda-categoria {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 8px 0 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  border-radius: 999px;
+  background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.busqueda-categoria small {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 16%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.busqueda-categoria:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .busqueda-categoria:hover {
+    border-color: color-mix(in srgb, var(--primary-color, #00c2ad) 40%, transparent);
+  }
+}
+
+.busqueda-categoria:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}

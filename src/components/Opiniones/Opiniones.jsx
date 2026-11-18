@@ -1,0 +1,56 @@
+import './opiniones.css'
+import { Star, ChevronDown} from 'lucide-react'
+import Foto from '../Foto/Foto.jsx'
+function Opiniones({ id, destacada = false, nombre, fecha, calificacion, comentario, imagenPerfil, onToggle, expandido, reciente = false, respuesta }) {
+  const inicial = String(nombre || '?').trim().charAt(0).toUpperCase()
+  return (
+    <div id={id} className={`opiniones-container${reciente ? ' opiniones-container--nueva' : ''}${destacada ? ' opiniones-container--destacada' : ''}`}>
+      <div className='opiniones-header'>
+        <div className='opiniones-header-left'>
+          {imagenPerfil ? (
+            <Foto src={imagenPerfil} className='opiniones-imagen-perfil' ancho={120} proporcion={1} caras />
+          ) : (
+            <span className="opiniones-avatar" aria-hidden="true">{inicial}</span>
+          )}
+          <div className='opiniones-header-info'>
+            <p className='opiniones-nombre'>{nombre}</p>
+            <p className='opiniones-fecha'>{fecha}</p>
+          </div>
+        </div>
+        <div className='opiniones-header-right'>
+          <div className='opiniones-header-calificacion'>
+            <Star size={13} color={calificacion >= 1 ? 'var(--yellow-color)' : 'var(--yellow-color-black)'} fill= {calificacion >= 1 ? 'var(--yellow-color)' : 'none'} className='opiniones-estrella'/>
+            <Star size={13} color={calificacion >= 2 ? 'var(--yellow-color)' : 'var(--yellow-color-black)'} fill= {calificacion >= 2 ? 'var(--yellow-color)' : 'none'} className='opiniones-estrella'/>
+            <Star size={13} color={calificacion >= 3 ? 'var(--yellow-color)' : 'var(--yellow-color-black)'} fill= {calificacion >= 3 ? 'var(--yellow-color)' : 'none'} className='opiniones-estrella'/>
+            <Star size={13} color={calificacion >= 4 ? 'var(--yellow-color)' : 'var(--yellow-color-black)'} fill= {calificacion >= 4 ? 'var(--yellow-color)' : 'none'} className='opiniones-estrella'/>
+            <Star size={13} color={calificacion >= 5 ? 'var(--yellow-color)' : 'var(--yellow-color-black)'} fill= {calificacion >= 5 ? 'var(--yellow-color)' : 'none'} className='opiniones-estrella'/>
+            <p className='opiniones-calificacion-texto'>{calificacion}</p>
+          </div>
+        </div>
+      </div>
+      <div className='opiniones-body'>
+        <button
+          type="button"
+          className='opiniones-arrow-down'
+          onClick={onToggle}
+          aria-expanded={Boolean(expandido)}
+          aria-label={expandido ? 'Ver menos' : 'Leer la opinión entera'}
+        >
+          <ChevronDown
+            size={17}
+            color='var(--primary-color)'
+            style={{ transform: `rotate(${expandido ? 180 : 0}deg)` }}
+          />
+        </button>
+      <p className='opiniones-comentario' style={{lineClamp: expandido ? 999 : 2 ,WebkitLineClamp: expandido ? 999 : 2}}>{comentario}</p>
+    </div>
+    {respuesta?.texto && (
+      <div className="opiniones-respuesta">
+        <span className="opiniones-pill">Dueño</span>
+        <p className="opiniones-respuesta-texto">{respuesta.texto}</p>
+      </div>
+    )}
+  </div>
+)
+}
+export default Opiniones

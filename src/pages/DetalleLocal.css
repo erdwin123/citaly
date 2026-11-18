@@ -1,0 +1,162 @@
+.detalle-local {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--background-color);
+  overflow-x: clip;
+}
+
+/* ---------- Cuerpo ---------- */
+
+.detalle-local-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 560px;
+  margin-inline: auto;
+  /* Abajo deja sitio a la barra de reservar, que va fija encima de la navbar. */
+  padding: 18px 16px 120px;
+  box-sizing: border-box;
+}
+
+.detalle-local-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Al saltar desde las pestañas, el título no queda debajo de ellas. */
+  scroll-margin-top: 64px;
+}
+
+.detalle-local-titulo {
+  margin: 0;
+  padding-left: 2px;
+  font-family: var(--font-familyDrink);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fonts-color-primary);
+  text-align: left;
+}
+
+/* Tres cifras bajo la cabecera: lo que no dice ya la foto. */
+.detalle-local-cifras {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  margin: 0;
+  border-radius: 18px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: var(--tarjeta-fondo);
+  overflow: hidden;
+}
+
+.detalle-local-cifra {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 3px;
+  padding: 13px 6px;
+}
+
+.detalle-local-cifra + .detalle-local-cifra {
+  border-left: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+}
+
+.detalle-local-cifra dd {
+  margin: 0;
+  font-family: var(--font-familyDrink);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--yellow-texto);
+  white-space: nowrap;
+}
+
+.detalle-local-cifra dt {
+  font-family: var(--font-familyPrincipal);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak);
+}
+
+.detalle-local-descripcion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.detalle-local-descripcion p {
+  margin: 0;
+  padding: 0 2px;
+  font-family: var(--font-familyPrincipal);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--fonts-color-primary-weak);
+}
+
+/* ---------- Entrada escalonada ---------- */
+
+/* Las secciones entran una tras otra, una sola vez, al abrir la ficha. */
+.detalle-local-entra {
+  animation: detalle-local-entra 0.5s var(--ease-out, ease-out) backwards;
+  animation-delay: calc(0.08s + var(--i, 0) * 0.07s);
+}
+
+@keyframes detalle-local-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detalle-local-entra {
+    animation: none;
+  }
+}
+
+/* ---------- Error ---------- */
+
+.detalle-local--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: calc(100dvh - 150px);
+  padding: 20px 16px;
+}
+
+.detalle-local-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background-color: rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary);
+  font-family: var(--font-familyPrincipal);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detalle-local--error .taly-momento {
+  width: 100%;
+  min-height: 0;
+}
+
+.detalle-local--error .taly-momento-figura--ilustracion {
+  width: min(220px, 58vw);
+}
+
+@media (max-width: 360px) {
+  .detalle-local-body {
+    padding-inline: 12px;
+  }
+}

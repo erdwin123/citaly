@@ -1,0 +1,314 @@
+/* Lienzo de Mi Negocio. El header y la navbar los pone Layout. */
+
+.negocio {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  min-height: calc(100dvh - 150px);
+  padding-bottom: 20px;
+  background: var(--background-color);
+  color: var(--fonts-color-primary);
+  font-family: var(--font-familyPrincipal);
+}
+
+.negocio-citas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 14px 24px;
+}
+
+.negocio-citas-encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 2px 0;
+}
+
+.negocio-citas-titulo {
+  margin: 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  text-align: left;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.negocio-citas-fecha {
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.negocio-citas-fecha::first-letter {
+  text-transform: uppercase;
+}
+
+.negocio-citas-acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.negocio-citas-contador {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  white-space: nowrap;
+}
+
+.negocio-citas-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--primary-color, #00c2ad) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 14%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.negocio-citas-pdf:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.negocio-citas-pdf:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+.negocio-citas-contador strong {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 16px;
+  color: var(--primary-texto, #00c2ad);
+}
+
+.negocio-citas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 6px;
+}
+
+.negocio-franja {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.negocio-franja-cabecera {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.negocio-franja-titulo {
+  margin: 0;
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.negocio-franja-cuenta {
+  font-size: 12px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 65%, transparent);
+}
+
+/* Hilo vertical que une los nodos de la agenda: 10px de margen + 58px de hora + 12px + mitad del nodo. */
+.negocio-franja-lista {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.negocio-franja-lista::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: calc(10px + 58px + 12px + 7px);
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza))) 12%,
+    rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza))) 88%,
+    transparent 100%
+  );
+}
+
+@media (max-width: 360px) {
+  .negocio-franja-lista::before {
+    left: calc(10px + 48px + 9px + 7px);
+  }
+}
+
+.negocio-citas-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 20px;
+  border-radius: 18px;
+  border: 1px dashed rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  text-align: center;
+}
+
+.negocio-citas-vacio p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.negocio-citas-vacio-luna {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: inset -9px -3px 0 0 var(--luna);
+  filter: drop-shadow(0 0 10px rgba(127, 216, 206, 0.3));
+}
+
+/* PC: foto, mapa de horario y resumen se quedan a ancho de celular. Las citas usan el resto. */
+@media (min-width: 960px) {
+  .negocio {
+    max-width: 1120px;
+    margin-inline: auto;
+    padding: 12px 24px 56px;
+  }
+
+  .negocio-tablero {
+    display: grid;
+    grid-template-columns: 390px minmax(0, 1fr);
+    grid-template-areas:
+      'ejemplo ejemplo'
+      'cabecera citas'
+      'resumen citas'
+      'ficha citas';
+    column-gap: 24px;
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .negocio-tablero > .cabecera-negocio {
+    grid-area: cabecera;
+  }
+
+  .negocio-tablero > .switch-ejemplo {
+    grid-area: ejemplo;
+    justify-self: center;
+    width: min(100%, 520px);
+    margin: 0 0 16px;
+  }
+
+  .negocio-tablero > .cabecera-negocio .cabecera-negocio-identidad {
+    min-height: 200px;
+    border-radius: 22px;
+  }
+
+  .negocio-tablero > .cabecera-negocio .cabecera-negocio-nombre {
+    font-size: 36px;
+  }
+
+  .negocio-tablero > .resumen-negocio {
+    grid-area: resumen;
+    padding: 8px 0 4px;
+  }
+
+  .negocio-tablero > .negocio-citas {
+    grid-area: citas;
+    position: sticky;
+    top: 84px;
+    max-height: calc(100dvh - 110px);
+    overflow: auto;
+    padding: 16px 16px 20px;
+    border-radius: 24px;
+    border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+    background: linear-gradient(165deg, var(--superficie-alta) 0%, var(--superficie-honda) 100%);
+  }
+
+  .negocio-tablero > .ficha-local {
+    grid-area: ficha;
+    padding: 4px 0 8px;
+  }
+
+  .negocio-tablero .filtro-citas {
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  /* El panel de la derecha tiene alto máximo y scroll propio: sin esto, con
+     una lista larga, el filtro (que es un scroll horizontal) se encoge a 0. */
+  .negocio-tablero > .negocio-citas > * {
+    flex-shrink: 0;
+  }
+}
+
+/* Mirando otro día: un atajo de vuelta a hoy junto a la fecha. */
+.negocio-citas-fecha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.negocio-citas-hoy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 14%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition:
+    background-color 0.18s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .negocio-citas-hoy:hover {
+    background: color-mix(in srgb, var(--primary-color, #00c2ad) 22%, transparent);
+  }
+}
+
+.negocio-citas-hoy:active {
+  transform: scale(0.96);
+}
+
+.negocio-citas-hoy:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+:root[data-tema='claro'] .negocio-citas-vacio-luna {
+  filter: none;
+}

@@ -1,0 +1,98 @@
+.perfil {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px;
+  margin-inline: auto;
+  min-height: calc(100dvh - 150px);
+  background: var(--background-color);
+  color: var(--fonts-color-primary);
+  font-family: var(--font-familyPrincipal);
+}
+
+.perfil--fuera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 40px;
+}
+
+.perfil-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%, 260px);
+  margin-top: 4px;
+}
+
+.perfil-auth-entrar,
+.perfil-auth-registro {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Los dos botones comparten caja: el de contorno lleva el borde y el lleno lo
+   lleva en su propio color, así no hay dos alturas distintas una al lado de
+   la otra. */
+.perfil-auth-entrar {
+  border: 1px solid var(--primary-color, #00c2ad);
+  background: var(--primary-color, #00c2ad);
+  color: var(--fonts-color-secondary, #121413);
+  transition:
+    background-color 0.2s var(--ease-out, ease-out),
+    border-color 0.2s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+.perfil-auth-registro {
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  background: var(--background-color);
+  color: var(--fonts-color-primary, #f0f0f0);
+  transition:
+    background-color 0.2s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .perfil-auth-entrar:hover {
+    background: var(--primary-color-strong, #06dfc9);
+    border-color: var(--primary-color-strong, #06dfc9);
+  }
+
+  .perfil-auth-registro:hover {
+    background: var(--superficie-alta);
+  }
+}
+
+.perfil-auth-entrar:active,
+.perfil-auth-registro:active {
+  transform: scale(0.96);
+}
+
+.perfil-auth-entrar:focus-visible,
+.perfil-auth-registro:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .perfil-auth-entrar,
+  .perfil-auth-registro {
+    transition-duration: 0.01ms;
+  }
+
+  .perfil-auth-entrar:active,
+  .perfil-auth-registro:active {
+    transform: none;
+  }
+}

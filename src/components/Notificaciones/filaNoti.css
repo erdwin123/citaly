@@ -1,0 +1,407 @@
+/* Fila de aviso. Sin tarjeta, sin fondo, sin icono: lo que la separa de la
+   siguiente es el aire. Leída o no, el texto se lee igual: leer un aviso no
+   lo hace menos cierto. Lo único que cambia es la cuenta del hilo (llena o
+   hueca) y el peso del título. */
+
+.fila-noti {
+  --tono: var(--ink-pale, #bdf4e8);
+  position: relative;
+  list-style: none;
+  border-radius: 14px;
+}
+
+.fila-noti--verde {
+  --tono: var(--primary-color, #00c2ad);
+}
+
+.fila-noti--rojo {
+  --tono: var(--peligro-texto);
+}
+
+.fila-noti--mostaza {
+  --tono: var(--yellow-color, #ffd166);
+}
+
+.fila-noti--yendo {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Vuelve con deshacer: entra en su sitio de siempre. */
+.fila-noti--vuelve {
+  animation: fila-noti-vuelve 0.26s var(--ease-out, ease-out);
+}
+
+@keyframes fila-noti-vuelve {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+/* ---------- Deslizar para borrar ---------- */
+
+/* Solo existe mientras se arrastra: si estuviera siempre debajo, asomaría
+   por las esquinas redondeadas. */
+.fila-noti-fondo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-right: 20px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--peligro-texto) 14%, var(--background-color, #121413));
+  color: var(--peligro-texto);
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.fila-noti--arrastrando .fila-noti-fondo,
+.fila-noti--yendo .fila-noti-fondo {
+  opacity: 1;
+}
+
+.fila-noti-fondo svg {
+  transition: transform 0.18s var(--ease-out, ease-out);
+}
+
+/* Pasado el umbral la papelera crece un poco: "si sueltas, se borra". */
+.fila-noti--listo .fila-noti-fondo {
+  background: color-mix(in srgb, var(--peligro-texto) 24%, var(--background-color, #121413));
+}
+
+.fila-noti--listo .fila-noti-fondo svg {
+  transform: scale(1.18);
+}
+
+.fila-noti-carta {
+  position: relative;
+  padding-left: 26px;
+  border-radius: 14px;
+  /* El navegador se queda con el scroll vertical; lo horizontal es nuestro. */
+  touch-action: pan-y;
+  will-change: transform;
+}
+
+/* Fondo sólido solo mientras se mueve, para tapar la franja roja. Quieta es
+   transparente y deja ver el hilo que pasa por detrás. */
+.fila-noti--arrastrando .fila-noti-carta,
+.fila-noti--yendo .fila-noti-carta {
+  background: var(--background-color, #121413);
+}
+
+.fila-noti--arrastrando .fila-noti-carta {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grabbing;
+}
+
+/* ---------- La cuenta del hilo ---------- */
+
+/* Radios desiguales: una gota de tinta, no un punto de CSS. */
+.fila-noti-cuenta {
+  position: absolute;
+  left: 2px;
+  top: 19px;
+  width: 11px;
+  height: 10px;
+  box-sizing: border-box;
+  border-radius: 58% 46% 54% 42% / 52% 58% 44% 50%;
+  background: var(--tono);
+  box-shadow: 0 0 0 4px var(--background-color, #121413);
+}
+
+.fila-noti--vista .fila-noti-cuenta {
+  background: var(--background-color, #121413);
+  border: 1.6px solid var(--tono);
+}
+
+/* ---------- Contenido ---------- */
+
+.fila-noti-enlace {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: -8px;
+  padding: 12px 8px 14px;
+  border-radius: 14px;
+  color: var(--fonts-color-primary, #f0f0f0);
+  text-decoration: none;
+  -webkit-user-drag: none;
+  transition:
+    background-color 0.2s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fila-noti-enlace:hover {
+    background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  }
+}
+
+.fila-noti:not(.fila-noti--arrastrando) .fila-noti-enlace:active {
+  transform: scale(0.99);
+}
+
+.fila-noti-enlace:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+.fila-noti-cabeza {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fila-noti-titulo {
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.fila-noti--vista .fila-noti-titulo {
+  font-weight: 600;
+}
+
+.fila-noti-cabeza time {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.fila-noti--nueva .fila-noti-cabeza time {
+  color: var(--tono);
+}
+
+/* Dos líneas como mucho: el detalle completo está al tocar. */
+.fila-noti-texto {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  max-width: 44ch;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-wrap: pretty;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+/* La acción va como texto con flecha, no como botón: toda la fila ya es el
+   enlace y un botón por fila era ruido. */
+.fila-noti-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.fila-noti-plazo {
+  font-variant-numeric: tabular-nums;
+  color: var(--yellow-texto, #ffd166);
+}
+
+/* Lo único que sí se apaga: lo que ya no tiene arreglo. */
+.fila-noti-vencio {
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 70%, transparent);
+}
+
+.fila-noti-accion {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary-texto, #00c2ad);
+}
+
+/* ---------- Borrar con ratón o teclado ---------- */
+
+.fila-noti-quitar {
+  position: absolute;
+  top: 8px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--background-color-another, #252926);
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.fila-noti-quitar:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fila-noti:hover .fila-noti-quitar {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .fila-noti-quitar:hover {
+    background: color-mix(in srgb, var(--peligro-texto) 20%, var(--background-color-another, #252926));
+    color: var(--peligro-texto);
+  }
+}
+
+.sr-solo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fila-noti-enlace {
+    transition-duration: 0.01ms;
+  }
+
+  .fila-noti-enlace:active {
+    transform: none;
+  }
+
+  .fila-noti--vuelve {
+    animation: none;
+  }
+}
+
+
+/* ---------- Fijadas: piden una acción con plazo ----------
+
+   Las únicas con tarjeta. Van arriba de todo, en mostaza, con la cuenta
+   latiendo y una línea que se consume hasta que vence. Es lo único de la
+   página que tiene derecho a llamar así la atención. */
+
+.fila-noti--fijada {
+  margin-bottom: 8px;
+}
+
+.fila-noti--fijada .fila-noti-carta {
+  overflow: hidden;
+  background: color-mix(in srgb, var(--yellow-color, #ffd166) 9%, var(--background-color, #121413));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--yellow-color, #ffd166) 30%, transparent);
+}
+
+.fila-noti--fijada .fila-noti-cuenta {
+  left: 12px;
+  top: 21px;
+  box-shadow: none;
+}
+
+/* El latido: un aro que sale de la cuenta y se deshace. Lento, para avisar
+   sin agobiar. */
+.fila-noti--fijada .fila-noti-cuenta::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 2px solid var(--tono);
+  animation: fila-noti-latido 2.2s var(--ease-out, ease-out) infinite;
+}
+
+@keyframes fila-noti-latido {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+.fila-noti--fijada .fila-noti-enlace {
+  margin-left: 0;
+  padding: 14px 14px 18px 10px;
+}
+
+.fila-noti--fijada .fila-noti-carta {
+  padding-left: 28px;
+}
+
+.fila-noti--fijada .fila-noti-cabeza time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--yellow-texto, #ffd166);
+}
+
+/* La acción, aquí sí, como botón lleno: es lo que hay que hacer. */
+.fila-noti--fijada .fila-noti-accion {
+  min-height: 32px;
+  padding: 0 12px 0 14px;
+  border-radius: 999px;
+  background: var(--yellow-color, #ffd166);
+  color: var(--fonts-color-secondary, #121413);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fila-noti--fijada .fila-noti-enlace:hover {
+    background: color-mix(in srgb, var(--yellow-color, #ffd166) 6%, transparent);
+  }
+}
+
+.fila-noti-tiempo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--yellow-color, #ffd166);
+  transform-origin: left center;
+  animation-name: fila-noti-tiempo;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes fila-noti-tiempo {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* No se puede borrar: el fondo sale en gris, no en rojo, y la papelera
+   tachada. */
+.fila-noti--fijada .fila-noti-fondo {
+  background: var(--background-color-another, #252926);
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fila-noti--fijada .fila-noti-cuenta::after {
+    animation: none;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,42 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background-color: rgb(var(--velo-modal) / calc(0.6 * var(--velo-alfa)));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-backdrop--velo {
+  background-color: transparent;
+}
+
+.modal-velo {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(var(--velo-modal) / calc(0.8 * var(--velo-alfa)));
+  opacity: 0;
+}
+
+.modal-panel {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Zonas desde las que se arrastra una hoja para cerrarla
+   (hooks/useArrastrarParaCerrar.js): el navegador no debe hacer scroll ahí. */
+[data-arrastre] {
+  touch-action: none;
+  user-select: none;
+}
+
+.hoja--arrastrando,
+.hoja--arrastrando [data-arrastre] {
+  cursor: grabbing;
+}

@@ -1,0 +1,353 @@
+/* Hojas de servicios. Sin sombras grandes ni filtros: listas planas con separadores finos. */
+
+.catalogo-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 18px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+  overflow: hidden;
+}
+
+.catalogo-lista li + li {
+  border-top: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+}
+
+.catalogo-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 0;
+  background: transparent;
+  color: var(--fonts-color-primary, #f0f0f0);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.catalogo-fila:active {
+  background-color: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+}
+
+.catalogo-fila:focus-visible {
+  outline: 2px solid var(--tono);
+  outline-offset: -2px;
+}
+
+.catalogo-fila-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.catalogo-fila-titulo {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogo-fila-meta {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.catalogo-fila-meta--corta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.catalogo-quienes {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.catalogo-precio {
+  flex-shrink: 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary-texto, #00c2ad);
+  white-space: nowrap;
+}
+
+.catalogo-flecha {
+  flex-shrink: 0;
+  margin-left: -4px;
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 55%, transparent);
+}
+
+.catalogo-nota {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--yellow-texto, #ffd166);
+}
+
+.catalogo-nuevo {
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 14%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.catalogo-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.catalogo-aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 209, 102, 0.28);
+  background: rgba(255, 209, 102, 0.07);
+  color: var(--yellow-texto, #ffd166);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.catalogo-aviso svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Vista previa con los componentes reales de la reserva. */
+
+.catalogo-previa {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px 6px;
+  border-radius: 18px;
+  border: 1px dashed color-mix(in srgb, var(--tono) 35%, transparent);
+  background: color-mix(in srgb, var(--tono) 5%, transparent);
+}
+
+.catalogo-previa-etiqueta {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tono);
+}
+
+.catalogo-previa-servicio {
+  margin: 0;
+  padding: 0;
+}
+
+.catalogo-previa-servicio .servicio-item {
+  cursor: default;
+}
+
+/* Campos */
+
+.catalogo-campo-cabecera small {
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 65%, transparent);
+}
+
+.catalogo-precio-campo {
+  position: relative;
+  display: block;
+}
+
+.catalogo-precio-campo input {
+  width: 100%;
+  padding-right: 54px;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.catalogo-precio-campo input::-webkit-outer-spin-button,
+.catalogo-precio-campo input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.catalogo-precio-campo em {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  pointer-events: none;
+}
+
+.catalogo-paso {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border-radius: 16px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+}
+
+.catalogo-paso button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tono) 12%, transparent);
+  color: var(--tono);
+  cursor: pointer;
+}
+
+.catalogo-paso button:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.catalogo-paso button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.catalogo-paso-valor {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Botones */
+
+.catalogo-botones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 10px;
+}
+
+.catalogo-boton-secundario {
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.catalogo-boton-secundario:disabled {
+  opacity: 0.5;
+}
+
+.catalogo-enlace {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--tono);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.catalogo-eliminar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.catalogo-eliminar-aviso {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--rosa-texto);
+}
+
+.catalogo-boton-peligro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(239, 71, 111, 0.25);
+  background: transparent;
+  color: var(--rosa-texto);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.catalogo-boton-peligro--armado {
+  background: var(--rosa);
+  border-color: var(--rosa);
+  color: #fff;
+}
+
+.catalogo-boton-secundario:focus-visible,
+.catalogo-boton-peligro:focus-visible,
+.catalogo-enlace:focus-visible,
+.catalogo-paso button:focus-visible {
+  outline: 2px solid var(--tono);
+  outline-offset: 2px;
+}
+
+.catalogo-error {
+  margin: 0;
+  color: var(--rosa-texto);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogo-boton-peligro,
+  .catalogo-fila {
+    transition: none;
+  }
+}

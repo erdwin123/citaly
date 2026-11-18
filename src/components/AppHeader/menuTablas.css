@@ -1,0 +1,249 @@
+/* Cartel de tablas colgado del botón de los tres puntos.
+
+   Paleta: antes era madera parda con letra teal y clavos y cuerdas teal. El
+   teal sobre marrón vibraba (dos colores saturados de temperatura opuesta
+   peleándose) y las cuerdas a rayas teal parecían de plástico.
+
+   Ahora la madera es un nogal apagado, cerca del gris verdoso de la app,
+   para que el cartel pertenezca al header y no parezca pegado encima. Encima
+   va lo cálido del mundo de Taly: letra crema (el papel de los sobres de
+   Notificaciones), iconos y clavos mostaza (su copete) y cuerda de bramante
+   de verdad. El teal se queda para el foco, que es su trabajo. */
+
+.menu-tablas {
+  --madera: #3d352c;
+  --madera-filo: #51473b;
+  --madera-veta: #2f2922;
+  position: absolute;
+  top: calc(100% + 2px);
+  right: 14px;
+  z-index: 120;
+  width: 224px;
+}
+
+/* Las dos cuerdas van por detrás y se ven en los huecos entre tablas, que es
+   lo que hace que el cartel se lea como "atado" y no como una lista. */
+.menu-tablas-cuerda {
+  position: absolute;
+  top: 0;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 2px;
+  /* Bramante: hebras torcidas en diagonal, no rayas de caramelo. */
+  background: repeating-linear-gradient(160deg, #a8936f 0 2px, #7d6b50 2px 4px);
+  opacity: 0.9;
+}
+
+.menu-tablas-cuerda--izq {
+  left: 15px;
+}
+
+.menu-tablas-cuerda--der {
+  right: 15px;
+}
+
+.menu-tablas-lista {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-tablas-item {
+  /* El giro final vive en el botón, no aquí: GSAP anima la rotación de este
+     elemento hasta 0 y si compartieran propiedad se perdería la torcedura. */
+  margin: 0;
+}
+
+.menu-tabla {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 224px;
+  height: 56px;
+  /* Lo justo para no pisar los clavos (x 15 y x 209, radio 3): así cabe
+     "Preguntas frecuentes" sin cortarse. */
+  padding: 0 20px 0 27px;
+  border: 0;
+  background: none;
+  color: #f2ebdd;
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transform: rotate(var(--giro, 0deg));
+  transition: filter 0.18s var(--ease-out, ease-out);
+}
+
+.menu-tabla-fondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 224px;
+  height: 56px;
+  /* El filtro de temblor se sale del cuadro. */
+  overflow: visible;
+  pointer-events: none;
+}
+
+.menu-tabla-icono,
+.menu-tabla-texto {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-tabla-icono {
+  flex-shrink: 0;
+  color: var(--yellow-color, #ffd166);
+}
+
+.menu-tabla-texto {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-tabla--ayuda .menu-tabla-texto {
+  letter-spacing: -0.012em;
+}
+
+/* ---------- Tabla del tema ---------- */
+
+.menu-tabla--tema {
+  gap: 9px;
+}
+
+.menu-tabla--tema .switch-tema {
+  position: relative;
+  z-index: 1;
+}
+
+/* El icono da media vuelta cada vez que cambia: la luna se va girando y
+   el sol llega girando. Va en un span porque el svg de lucide se cambia
+   entero y la key del span es la que reinicia la animación. */
+.menu-tabla-icono--tema {
+  display: inline-grid;
+  place-items: center;
+  animation: menu-tema-icono 0.45s var(--ease-out, ease-out);
+}
+
+@keyframes menu-tema-icono {
+  from {
+    opacity: 0;
+    transform: rotate(-110deg) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* ---------- Tabla de favoritos ---------- */
+
+/* Las rayitas de la estrella parpadean una vez, cuando la tabla ya ha
+   caído y se queda quieta: un guiño, no un adorno que no para. */
+.menu-tabla--favoritos .icono-favoritos-rayas {
+  transform-box: view-box;
+  transform-origin: 12px 12.6px;
+  animation: menu-favoritos-rayas 0.6s var(--ease-out, ease-out) 0.45s both;
+}
+
+@keyframes menu-favoritos-rayas {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-tabla-icono--tema,
+  .menu-tabla--favoritos .icono-favoritos-rayas {
+    animation: none;
+  }
+}
+
+/* El hover aclara la madera entera con un filtro, no recolorea bordes. */
+@media (hover: hover) and (pointer: fine) {
+  .menu-tabla:hover {
+    filter: brightness(1.18);
+  }
+}
+
+.menu-tabla:active {
+  filter: brightness(0.94);
+}
+
+.menu-tabla:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-tabla {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu-tablas {
+    right: 10px;
+  }
+}
+
+
+/* El velo: tinta oscura de Taly, no negro puro. Fijo a la pantalla; su
+   forma (el círculo que crece) la pone GSAP con clip-path. */
+.menu-velo {
+  position: fixed;
+  inset: 0;
+  z-index: 115;
+  background: rgba(9, 15, 14, 0.66);
+  clip-path: circle(0px at 100% 0%);
+  visibility: hidden;
+  will-change: clip-path;
+}
+
+/* De día el velo es tinta más clara: oscurece la app lo justo para que el
+   cartel mande, sin apagar la pantalla como de noche. */
+:root[data-tema='claro'] .menu-velo {
+  background: rgba(27, 34, 32, 0.38);
+}
+
+/* ---------- Modo claro: madera de día ----------
+   El mismo cartel, pero de roble claro en vez de nogal: de día la madera
+   recibe luz. Se mantiene en la familia cálida (no se va a beige ni a gris),
+   la letra pasa a marrón tinta para leerse y los iconos a un tostado. Una
+   sombra marrón corta lo separa del papel. */
+:root[data-tema='claro'] .menu-tablas {
+  --madera: #c99d69;
+  --madera-filo: #9b6d3e;
+  --madera-veta: #a87a4a;
+}
+
+:root[data-tema='claro'] .menu-tabla {
+  color: #34210f;
+}
+
+:root[data-tema='claro'] .menu-tabla-icono {
+  color: #6f4318;
+}
+
+:root[data-tema='claro'] .menu-tabla-fondo {
+  filter: drop-shadow(0 4px 5px rgb(74 52 26 / 0.28));
+}

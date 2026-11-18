@@ -1,0 +1,155 @@
+/* Confirmación de "Voy pa allá" / "Cancelar". Capa propia (portal a body), con
+   el mismo corte que los paneles de Mi Negocio y Mi Perfil: superficie #1E2221,
+   radio 22, Quicksand y botones en píldora. */
+
+.modal-accion-pantalla {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  background-color: rgb(var(--velo-modal) / calc(0.68 * var(--velo-alfa)));
+  animation: modal-accion-fondo 0.24s ease-out;
+}
+
+.modal-accion-panel {
+  --tono: var(--primary-color, #00c2ad);
+
+  box-sizing: border-box;
+  width: min(100%, 360px);
+  padding: 22px 20px 18px;
+  border: 1px solid rgb(var(--tinte) / calc(0.09 * var(--tinte-fuerza)));
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--tono) 9%, transparent),
+      transparent 42%
+    ),
+    var(--background-color-secondary, #1e2221);
+  box-shadow: 0 22px 46px -18px rgb(var(--sombra) / calc(0.85 * var(--sombra-alfa)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  animation: modal-accion-panel 0.28s ease-out;
+}
+
+.modal-accion-pantalla--cancelar .modal-accion-panel {
+  --tono: var(--close-color, #c53f3f);
+}
+
+.modal-accion-eyebrow {
+  display: block;
+  margin: 0 0 4px;
+  color: var(--tono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modal-accion-titulo {
+  margin: 0;
+  text-align: left;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.modal-accion-aviso {
+  margin: 12px 0 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgb(var(--tinte) / calc(0.07 * var(--tinte-fuerza)));
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-accion-botones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.modal-accion-boton {
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.modal-accion-boton:active {
+  transform: scale(0.96);
+}
+
+.modal-accion-boton:focus-visible {
+  outline: 2px solid var(--tono);
+  outline-offset: 2px;
+}
+
+.modal-accion-boton--si {
+  background: var(--tono);
+  color: var(--fonts-color-secondary, #121413);
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--tono) 90%, transparent);
+}
+
+.modal-accion-pantalla--cancelar .modal-accion-boton--si {
+  color: #fdf3f3;
+}
+
+.modal-accion-boton--no {
+  border: 1px solid rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+@media (max-width: 360px) {
+  .modal-accion-botones {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@keyframes modal-accion-fondo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-accion-panel {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-accion-pantalla,
+  .modal-accion-panel {
+    animation: none;
+  }
+
+  .modal-accion-boton {
+    transition: none;
+  }
+
+  .modal-accion-boton:active {
+    transform: none;
+  }
+}

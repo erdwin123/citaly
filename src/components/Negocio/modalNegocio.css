@@ -1,0 +1,1097 @@
+/* Hoja inferior del panel del dueño. */
+
+.modal-backdrop--hoja {
+  align-items: flex-end;
+}
+
+.modal-backdrop--hoja .modal-panel {
+  max-width: 480px;
+  padding: 0;
+}
+
+.modal-negocio {
+  --tono: var(--fonts-color-primary, #f0f0f0);
+  position: relative;
+  width: 100%;
+  max-height: 88dvh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border-radius: 26px 26px 0 0;
+  border: 1px solid rgb(var(--tinte) / calc(0.08 * var(--tinte-fuerza)));
+  border-bottom: 0;
+  /* Antes había un resplandor radial del tono en la boca de la hoja y un
+     degradado de 180° por debajo. Los dos son relleno: la hoja ya se separa
+     del velo por su propio borde y su sombra. Superficie plana. */
+  background: var(--superficie-alta);
+  box-shadow: 0 -18px 48px -12px rgb(var(--sombra) / calc(0.7 * var(--sombra-alfa)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  overflow: hidden;
+}
+
+.modal-negocio--verde {
+  --tono: var(--primary-color, #00c2ad);
+}
+
+.modal-negocio--amarillo {
+  --tono: var(--yellow-color, #ffd166);
+}
+
+.modal-negocio--rosa {
+  --tono: var(--rosa);
+}
+
+.modal-negocio--rojo {
+  --tono: var(--close-color, #c53f3f);
+}
+
+/* El asa se ve de 38×4 pero se coge en una zona más grande (el padding). */
+.modal-negocio-asa {
+  align-self: center;
+  display: block;
+  padding: 10px 30px 0;
+  cursor: grab;
+}
+
+.modal-negocio-asa::before {
+  content: '';
+  display: block;
+  width: 38px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgb(var(--tinte) / calc(0.18 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-cabecera {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 18px 14px;
+}
+
+/* El filo de abajo no es una línea de borde a borde: sale del tono de la
+   hoja y se apaga hacia la derecha, el mismo gesto que separa los bloques
+   en Perfil. */
+.modal-negocio-cabecera::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right,
+      color-mix(in srgb, var(--tono) 42%, transparent),
+      rgb(var(--tinte) / calc(0.07 * var(--tinte-fuerza))) 38%,
+      transparent 92%);
+}
+
+/* Icono desnudo, al tono. La placa redondeada de color detrás del icono era
+   el mismo tic que se quitó de las filas de Perfil. */
+.modal-negocio-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  color: var(--tono);
+}
+
+.modal-negocio-titulos {
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-negocio-titulo {
+  margin: 0;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  text-align: left;
+}
+
+/* El subtítulo era una etiqueta en versalitas con tracking. Es una frase, no
+   una etiqueta de sección: se lee en caja normal. */
+.modal-negocio-subtitulo {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-wrap: pretty;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  cursor: pointer;
+  transition:
+    background-color 0.18s var(--ease-out, ease-out),
+    color 0.18s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .modal-negocio-cerrar:hover {
+    background: rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+    color: var(--fonts-color-primary, #f0f0f0);
+  }
+}
+
+.modal-negocio-cerrar:active {
+  transform: scale(0.92);
+}
+
+.modal-negocio-cerrar:focus-visible {
+  outline: 2px solid var(--tono);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-negocio-cerrar {
+    transition-duration: 0.01ms;
+  }
+
+  .modal-negocio-cerrar:active {
+    transform: none;
+  }
+}
+
+.modal-negocio-cuerpo {
+  padding: 18px 18px calc(22px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* La entrada la lleva GSAP en la hoja; aquí no se anima otra vez el contenido. */
+.modal-negocio-vista {
+  animation: none;
+}
+
+.modal-negocio-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal-negocio-lead {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-nota {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--fonts-color-primary-weak, #bdbaba) 80%, transparent);
+}
+
+/* Números grandes */
+
+.modal-negocio-numero {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.modal-negocio-numero small {
+  margin-left: 4px;
+  font-size: 0.45em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-numero--grande {
+  font-size: 2.9rem;
+}
+
+.modal-negocio-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0 2px;
+}
+
+.modal-negocio-hero-sub {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+/* Secciones y datos */
+
+.modal-negocio-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-negocio-seccion-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-negocio-seccion-titulo {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-seccion-extra {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--tono);
+}
+
+.modal-negocio-datos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.modal-negocio-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 11px 12px;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-dato-etiqueta {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-dato-valor {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-negocio-dato--verde .modal-negocio-dato-valor {
+  color: var(--primary-texto, #00c2ad);
+}
+
+.modal-negocio-dato--amarillo .modal-negocio-dato-valor {
+  color: var(--yellow-texto, #ffd166);
+}
+
+.modal-negocio-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.modal-negocio-fila-etiqueta {
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-fila-valor {
+  font-weight: 700;
+  text-align: right;
+}
+
+.modal-negocio-servicio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modal-negocio-servicio svg {
+  flex-shrink: 0;
+  color: var(--tono);
+}
+
+/* Siguiente cita */
+
+.modal-negocio-hero-anillo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-negocio-anillo {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.modal-negocio-anillo svg,
+.modal-negocio-dona svg {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-negocio-anillo-pista,
+.modal-negocio-dona-pista {
+  fill: none;
+  stroke: rgb(var(--tinte) / calc(0.07 * var(--tinte-fuerza)));
+  stroke-width: 9;
+}
+
+.modal-negocio-anillo-progreso {
+  fill: none;
+  stroke: var(--primary-color, #00c2ad);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+
+.modal-negocio-anillo-centro,
+.modal-negocio-dona-centro {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.modal-negocio-anillo-unidad,
+.modal-negocio-dona-sub {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-cliente {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 18%, transparent);
+  color: var(--primary-texto, #00c2ad);
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.modal-negocio-cliente-textos {
+  flex: 1;
+  min-width: 0;
+}
+
+.modal-negocio-cliente-nombre {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modal-negocio-cliente-tel {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-negocio-chip-estado {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.modal-negocio-chip-estado--pendiente,
+.modal-negocio-chip-estado--porTi {
+  color: var(--yellow-texto, #ffd166);
+}
+
+.modal-negocio-chip-estado--confirmada {
+  color: var(--primary-texto, #00c2ad);
+}
+
+.modal-negocio-chip-estado--cancelada {
+  color: var(--close-color, #c53f3f);
+}
+
+.modal-negocio-contacto {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.modal-negocio-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 13px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.modal-negocio-boton--suave {
+  border: 1px solid color-mix(in srgb, var(--primary-color, #00c2ad) 30%, transparent);
+  background: color-mix(in srgb, var(--primary-color, #00c2ad) 10%, transparent);
+  color: var(--primary-texto, #00c2ad);
+}
+
+.modal-negocio-despues {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px dashed rgb(var(--tinte) / calc(0.12 * var(--tinte-fuerza)));
+  font-size: 13px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-despues strong {
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-negocio-despues span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.modal-negocio-despues em {
+  grid-column: 2 / -1;
+  font-style: normal;
+  font-size: 12px;
+}
+
+.modal-negocio-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0 6px;
+  text-align: center;
+}
+
+.modal-negocio-vacio-luna {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  box-shadow: inset -12px -4px 0 0 var(--luna);
+  filter: drop-shadow(0 0 12px rgba(127, 216, 206, 0.35));
+}
+
+/* Ocupación */
+
+.modal-negocio-ocupacion {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+}
+
+.modal-negocio-dona {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.modal-negocio-dona-arco {
+  fill: none;
+  stroke-width: 13;
+}
+
+.modal-negocio-leyenda,
+.modal-negocio-desglose,
+.modal-negocio-afectadas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-negocio-leyenda li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-leyenda-muestra {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.modal-negocio-leyenda-nombre {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modal-negocio-leyenda strong {
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.modal-negocio-barras {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  height: 118px;
+  padding: 10px 10px 8px;
+  border-radius: 14px;
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.03 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-columna {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-negocio-columna-valor {
+  height: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--fonts-color-primary, #f0f0f0);
+}
+
+.modal-negocio-columna-pista {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-negocio-columna-barra {
+  width: min(100%, 16px);
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(180deg, var(--primary-color-strong, #06dfc9), var(--primary-color-weak, #077a6f));
+}
+
+.modal-negocio-columna-barra--vacia {
+  height: 3px;
+  background: rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-columna--pasada .modal-negocio-columna-barra:not(.modal-negocio-columna-barra--vacia) {
+  background: color-mix(in srgb, var(--primary-color-weak, #077a6f) 70%, var(--background-color-secondary));
+}
+
+.modal-negocio-columna--ahora .modal-negocio-columna-barra:not(.modal-negocio-columna-barra--vacia) {
+  background: linear-gradient(180deg, #ffe29b, var(--yellow-color, #ffd166));
+}
+
+.modal-negocio-columna-hora {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-columna--ahora .modal-negocio-columna-hora {
+  color: var(--yellow-texto, #ffd166);
+}
+
+/* Estimado */
+
+.modal-negocio-dinero {
+  display: flex;
+  gap: 3px;
+  height: 12px;
+}
+
+.modal-negocio-dinero-parte {
+  flex-basis: 0;
+  border-radius: 999px;
+}
+
+.modal-negocio-desglose li {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-desglose li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.modal-negocio-desglose-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.modal-negocio-desglose-nombre {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.modal-negocio-desglose-ayuda {
+  font-size: 11px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-desglose-monto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-familyDrink, 'drink', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-negocio-desglose-monto small {
+  font-family: var(--font-familyPrincipal, 'Quicksand', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+/* Pausa y express */
+
+.modal-negocio-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.modal-negocio-chip {
+  --chip: var(--yellow-color, #ffd166);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Números sueltos (personas, cupos): círculo perfecto, mismo alto que las píldoras. */
+.modal-negocio-chip--redondo {
+  width: 40px;
+  height: 40px;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-negocio-chip:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.modal-negocio-chip--verde {
+  --chip: var(--primary-color, #00c2ad);
+}
+
+.modal-negocio-chip[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--chip) 60%, transparent);
+  background: color-mix(in srgb, var(--chip) 16%, transparent);
+  color: var(--chip);
+}
+
+.modal-negocio-segmentado {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  border: 1px solid rgb(var(--tinte) / calc(0.06 * var(--tinte-fuerza)));
+}
+
+.modal-negocio-segmentado button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.modal-negocio-segmentado button[aria-pressed='true'] {
+  background: var(--yellow-color, #ffd166);
+  color: var(--fonts-color-secondary, #121413);
+}
+
+.modal-negocio-afectadas li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--yellow-color, #ffd166) 7%, transparent);
+  font-size: 13px;
+}
+
+.modal-negocio-afectadas strong {
+  color: var(--yellow-texto, #ffd166);
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-negocio-afectadas span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.modal-negocio-afectadas em {
+  font-style: normal;
+  font-size: 11px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-hueco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--primary-color, #00c2ad) 28%, transparent);
+  background: radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--primary-color, #00c2ad) 14%, transparent) 0%, transparent 70%);
+  text-align: center;
+}
+
+.modal-negocio-hueco .modal-negocio-numero {
+  color: var(--primary-texto, #00c2ad);
+}
+
+.modal-negocio-hueco-etiqueta {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-hueco-sub {
+  font-size: 12px;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fonts-color-primary-weak, #bdbaba);
+}
+
+.modal-negocio-input {
+  min-height: 44px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--tinte) / calc(0.08 * var(--tinte-fuerza)));
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.modal-negocio-input:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--primary-color, #00c2ad) 60%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color, #00c2ad) 18%, transparent);
+}
+
+.modal-negocio-accion-principal {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--tono);
+  color: var(--fonts-color-secondary, #121413);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease-out, ease-out),
+    opacity 0.2s var(--ease-out, ease-out),
+    transform 0.15s var(--ease-out, ease-out);
+}
+
+/* El tono es el color de la hoja, así que el hover aclara ese mismo tono en
+   vez de encender un borde. */
+@media (hover: hover) and (pointer: fine) {
+  .modal-negocio-accion-principal:not(:disabled):hover {
+    background: color-mix(in srgb, var(--tono) 86%, #f0f0f0);
+  }
+
+  .modal-negocio-boton--suave:hover {
+    background: color-mix(in srgb, var(--primary-color, #00c2ad) 20%, transparent);
+  }
+}
+
+.modal-negocio-accion-principal:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.modal-negocio-accion-principal:focus-visible {
+  outline: 2px solid var(--fonts-color-primary, #f0f0f0);
+  outline-offset: 2px;
+}
+
+.modal-negocio-accion-principal:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.modal-negocio-boton--suave {
+  transition: background-color 0.2s var(--ease-out, ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .modal-negocio-accion-principal,
+  .modal-negocio-boton--suave {
+    transition-duration: 0.01ms;
+  }
+
+  .modal-negocio-accion-principal:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .modal-negocio-ocupacion {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .modal-negocio-datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Pausa: activa, otro tiempo ---------- */
+
+.modal-negocio-hueco--pausa {
+  border-color: color-mix(in srgb, var(--yellow-color, #ffd166) 32%, transparent);
+  background: radial-gradient(120% 90% at 50% 0%,
+      color-mix(in srgb, var(--yellow-color, #ffd166) 14%, transparent) 0%,
+      transparent 70%);
+}
+
+.modal-negocio-hueco--pausa .modal-negocio-hueco-etiqueta {
+  color: var(--yellow-texto, #ffd166);
+}
+
+.pausa-mas {
+  margin-top: 10px;
+}
+
+/* Cantidad y unidad en una fila: el número manda, la unidad al lado. */
+.pausa-otro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pausa-otro .modal-negocio-input {
+  font-variant-numeric: tabular-nums;
+}
+
+.pausa-otro .modal-negocio-segmentado {
+  min-width: 170px;
+}
+
+.pausa-error,
+.express-error {
+  color: var(--peligro-texto);
+}
+
+.express-error {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ---------- Express: turnos libres ---------- */
+
+.express-turnos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+}
+
+.express-turno {
+  position: relative;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 1px solid rgb(var(--tinte) / calc(0.1 * var(--tinte-fuerza)));
+  border-radius: 13px;
+  background: rgb(var(--tinte) / calc(0.04 * var(--tinte-fuerza)));
+  color: var(--fonts-color-primary, #f0f0f0);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    background-color 0.18s var(--ease-out, ease-out),
+    border-color 0.18s var(--ease-out, ease-out),
+    transform 0.14s var(--ease-out, ease-out);
+}
+
+/* El sugerido lleva su marca aunque elijas otro, para saber cuál era. */
+.express-turno--sugerido::after {
+  content: 'Próximo';
+  position: absolute;
+  top: -7px;
+  right: 8px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--background-color-another, #252926);
+  color: var(--primary-texto, #00c2ad);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.express-turno[aria-checked='true'] {
+  border-color: var(--primary-color, #00c2ad);
+  background: var(--primary-color, #00c2ad);
+  color: var(--fonts-color-secondary, #121413);
+}
+
+.express-turno:active {
+  transform: scale(0.96);
+}
+
+.express-turno:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .express-turno {
+    transition-duration: 0.01ms;
+  }
+
+  .express-turno:active {
+    transform: none;
+  }
+}
+
+/* De día la luna del vacío es de tinta mostaza y no brilla: un halo menta
+   sobre crema se ve como una mancha. */
+:root[data-tema='claro'] .modal-negocio-vacio-luna {
+  filter: none;
+}

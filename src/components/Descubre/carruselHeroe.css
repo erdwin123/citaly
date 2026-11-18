@@ -1,0 +1,85 @@
+/* Carrusel del héroe. El viewport tiene el mismo radio y la misma sombra que el
+   héroe (.heroe-local-link), así que recorta los slides vecinos pero se ve
+   idéntico al héroe único de antes. */
+
+.carrusel-heroe {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.carrusel-heroe-viewport {
+  overflow: hidden;
+  border-radius: 26px;
+  /* La misma sombra que llevaba .heroe-local-link, ahora en el viewport. */
+  box-shadow: 0 22px 46px -22px rgb(var(--sombra) / calc(0.95 * var(--sombra-alfa)));
+}
+
+.carrusel-heroe-pista {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.carrusel-heroe-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+/* Dentro del carrusel el héroe llena el slide: se le quitan el tope y el centrado
+   que necesita cuando va suelto, para que no se encoja ni deje huecos. */
+.carrusel-heroe-slide .heroe-local {
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* El viewport ya pone la sombra; la del héroe interior sobraría y se recorta. */
+.carrusel-heroe-slide .heroe-local-link {
+  box-shadow: none;
+}
+
+/* El botón mide 24x24 (mínimo táctil de WCAG 2.2); el punto que se ve sigue
+   siendo pequeño y se dibuja con ::before en el centro. */
+.carrusel-heroe-puntos {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.carrusel-heroe-punto {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.carrusel-heroe-punto::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgb(var(--tinte) / calc(0.28 * var(--tinte-fuerza)));
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.carrusel-heroe-punto--on::before {
+  width: 20px;
+  background: var(--primary-color, #00c2ad);
+}
+
+.carrusel-heroe-punto:focus-visible {
+  outline: 2px solid var(--primary-color, #00c2ad);
+  outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carrusel-heroe-pista {
+    transition: none;
+  }
+}

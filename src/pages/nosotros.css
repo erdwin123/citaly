@@ -1,0 +1,245 @@
+.nosotros {
+  /* Merchant no trae tildes: que las letras que le faltan salgan de otra
+     de máquina de escribir y no de una sans cualquiera. */
+  --font-familyMerchant: 'Merchant', 'Courier New', 'Courier', monospace;
+  position: relative;
+  min-height: 100svh;
+  background: var(--background-color, #121413);
+  color: var(--fonts-color-primary, #f0f0f0);
+  overflow-x: clip;
+}
+
+.nosotros-contenido {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- volver ---------- */
+
+.nosotros-volver {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top));
+  left: 16px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 2px solid rgba(189, 244, 232, 0.35);
+  border-radius: 48% 52% 50% 50%;
+  background: rgba(18, 20, 19, 0.7);
+  color: var(--ink-pale, #bdf4e8);
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition:
+    transform 0.16s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+    border-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nosotros-volver:hover {
+    border-color: var(--primary-color, #00c2ad);
+  }
+}
+
+.nosotros-volver:active {
+  transform: scale(0.94);
+}
+
+.nosotros-volver:focus-visible {
+  outline: 3px solid var(--primary-color, #00c2ad);
+  outline-offset: 3px;
+}
+
+/* ---------- hilo de progreso ---------- */
+
+.nosotros-hilo {
+  position: fixed;
+  top: 18vh;
+  right: clamp(10px, 2vw, 26px);
+  z-index: 20;
+  width: 26px;
+  height: 64vh;
+  pointer-events: none;
+}
+
+.nosotros-hilo-guia,
+.nosotros-hilo-lleno {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  translate: -50% 0;
+}
+
+.nosotros-hilo-guia {
+  background: repeating-linear-gradient(to bottom, rgba(189, 244, 232, 0.35) 0 8px, transparent 8px 15px);
+}
+
+.nosotros-hilo-lleno {
+  width: 3px;
+  background: repeating-linear-gradient(to bottom, #ffd166 0 8px, transparent 8px 15px);
+}
+
+.nosotros-hilo-taly {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -60%;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .nosotros-hilo {
+    display: none;
+  }
+}
+
+/* Mientras llega el 3D, el mismo fondo que tendrá. */
+.nosotros-esperando-3d {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #121413;
+}
+
+/* ==========================================================================
+   MODO LIGERO: tinta sobre papel. Mismo contenido, colores invertidos.
+   ========================================================================== */
+
+.nosotros--ligero {
+  --nos-texto: #0e2e2a;
+  --nos-texto-suave: #4b5f5b;
+  --nos-acento: #b07a00;
+  --nos-menta: #0a9384;
+  --nos-marca: rgba(255, 209, 102, 0.75);
+  background: #f2ebdd;
+  color: var(--nos-texto);
+}
+
+/* Botones fijos */
+.nosotros--ligero .nosotros-volver,
+.nosotros--ligero .nos-modo-boton {
+  border-color: rgba(14, 46, 42, 0.3);
+  background: rgba(255, 251, 242, 0.85);
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-modo-pista {
+  background: rgba(14, 46, 42, 0.15);
+}
+.nosotros--ligero .nos-modo-bola {
+  background: var(--nos-texto);
+}
+.nosotros--ligero .nos-modo-nota {
+  background: rgba(255, 251, 242, 0.9);
+  color: var(--nos-texto-suave);
+  box-shadow: 2px 2px 0 rgba(14, 46, 42, 0.15);
+}
+.nosotros--ligero .nosotros-hilo-guia {
+  background: repeating-linear-gradient(to bottom, rgba(14, 46, 42, 0.3) 0 8px, transparent 8px 15px);
+}
+
+/* Etiquetas de capítulo */
+.nosotros--ligero .nos-etiqueta {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-etiqueta span {
+  border-color: var(--nos-acento);
+  color: var(--nos-acento);
+}
+
+/* Héroe */
+.nosotros--ligero .nos-hero-letra .logotipo {
+  filter: drop-shadow(0.03em 0.04em 0 #bdf4e8);
+}
+.nosotros--ligero .nos-hero-sub {
+  color: var(--nos-texto-suave);
+}
+.nosotros--ligero .nos-hero-sub span {
+  color: var(--nos-acento);
+}
+.nosotros--ligero .nos-hero-pista {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .orbita-flota .icono-tinta,
+.nosotros--ligero .nos-paso-objeto .icono-tinta {
+  filter: drop-shadow(0 8px 10px rgba(14, 46, 42, 0.18));
+}
+
+/* Historia */
+.nosotros--ligero .nos-historia::before {
+  background: radial-gradient(ellipse 70% 60% at 25% 28%, rgba(242, 235, 221, 0.92), rgba(242, 235, 221, 0) 70%);
+}
+.nosotros--ligero .nos-historia-titulo,
+.nosotros--ligero .nos-historia-parrafo {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-historia-parrafo .es-destacada {
+  color: var(--nos-acento);
+}
+.nosotros--ligero .nos-historia-nota {
+  fill: var(--nos-acento);
+}
+
+/* Pasos */
+.nosotros--ligero .nos-pasos-titulo,
+.nosotros--ligero .nos-paso-texto p {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-pasos-titulo em {
+  color: var(--nos-menta);
+}
+.nosotros--ligero .nos-pasos-lead {
+  color: var(--nos-texto-suave);
+}
+.nosotros--ligero .nos-paso-texto h3 {
+  color: var(--nos-acento);
+}
+.nosotros--ligero .nos-paso-num {
+  -webkit-text-stroke-color: rgba(10, 147, 132, 0.35);
+}
+.nosotros--ligero .nos-paso-ilus::before {
+  box-shadow: 0 24px 40px rgba(14, 46, 42, 0.25);
+}
+
+/* Valores: tarjetas de papel blanco sobre el crema */
+.nosotros--ligero .nos-valores-titulo,
+.nosotros--ligero .nos-valor-inner h3 {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-valores-titulo em {
+  color: var(--nos-acento);
+}
+.nosotros--ligero .nos-valor-inner {
+  background: linear-gradient(160deg, #fffdf7, #fbf5e8);
+  box-shadow: 0 18px 36px rgba(14, 46, 42, 0.14);
+}
+.nosotros--ligero .nos-valor-inner p,
+.nosotros--ligero .nos-cifra-etiqueta {
+  color: var(--nos-texto-suave);
+}
+.nosotros--ligero .nos-cifra-num {
+  color: var(--nos-menta);
+}
+
+/* Equipo */
+.nosotros--ligero .nos-equipo-titulo,
+.nosotros--ligero .nos-miembro h3 {
+  color: var(--nos-texto);
+}
+.nosotros--ligero .nos-equipo-titulo em {
+  color: var(--nos-menta);
+}
+.nosotros--ligero .nos-miembro-rol {
+  color: var(--nos-acento);
+}
+.nosotros--ligero .nos-miembro-frase {
+  color: var(--nos-texto-suave);
+}
+
+/* Cierre: en papel sobre papel el círculo no se notaría; se tiñe de menta. */
+.nosotros--ligero .nos-cierre-papel {
+  background-color: #dff5ef;
+}

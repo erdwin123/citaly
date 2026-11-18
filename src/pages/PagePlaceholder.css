@@ -1,0 +1,27 @@
+.page-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: calc(100dvh - 150px);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.page-placeholder .taly-momento {
+  width: 100%;
+}
+
+.page-placeholder h1 {
+  color: var(--primary-texto);
+  font-family: var(--font-familyPrincipal);
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.page-placeholder p {
+  color: var(--fonts-color-primary-weak);
+  font-family: var(--font-familyPrincipal);
+}
